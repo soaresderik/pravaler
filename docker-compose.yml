@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  elixir:
+    build: .
+    environment:
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      PGDATABASE: pravaler_dev
+      PGPORT: 5432
+      PGHOST: postgres
+    restart: always
+    volumes:
+      - ./:/app
+    ports:
+      - 4000:4000
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres
+    environment:
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - ../pg-data:/var/lib/postgresql/data
+      - ../postgres.conf:/etc/postgresql/postgres.conf
